@@ -1,28 +1,19 @@
 {
   "manifestVersion": "2.2",
   "contracts": {
-    "LidSimplifiedPresaleTimer": "LidSimplifiedPresaleTimer",
+    "LidSimplifiedPresale": "LidSimplifiedPresale",
     "LidSimplifiedPresaleRedeemer": "LidSimplifiedPresaleRedeemer",
+    "LidSimplifiedPresaleTimer": "LidSimplifiedPresaleTimer",
     "LidTimeLock": "LidTimeLock",
-    "LidTimeLockStaking": "LidTimeLock",
-    "LidSimplifiedPresale": "LidSimplifiedPresale"
+    "LidTimeLockStaking": "LidTimeLock"
   },
   "dependencies": {},
   "name": "lid-simplified-presale-contracts",
   "version": "1.0.0",
   "compiler": {
-    "compilerSettings": {
-      "optimizer": {
-        "enabled": false,
-        "runs": "200"
-      }
-    },
-    "typechain": {
-      "enabled": false
-    },
     "manager": "truffle",
-    "artifactsDir": "build/contracts",
-    "contractsDir": "contracts"
-  },
-  "telemetryOptIn": true
+    "compilerSettings": {
+      "optimizer": {}
+    }
+  }
 }
