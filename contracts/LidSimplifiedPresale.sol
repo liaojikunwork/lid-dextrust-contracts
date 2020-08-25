@@ -181,7 +181,8 @@ contract LidSimplifiedPresale is Initializable, Ownable, ReentrancyGuard, Pausab
     }
 
     function deposit(address payable referrer) public payable whenPresaleActive nonReentrant whenNotPaused {
-        require(timer.updateEndTime() >= now, "Endtime past.");
+        uint endTime = timer.updateEndTime();
+        require(endTime == 0 || endTime >= now, "Endtime past.");
         require(msg.sender != referrer, "Sender cannot be referrer.");
         uint accountCurrentDeposit = redeemer.accountDeposits(msg.sender);
         uint fee = msg.value.mulBP(referralBP);
