@@ -143,7 +143,7 @@ describe("LidSimplifiedPresale", function () {
     });
   });
 
-  describe("First depository succeed", function () {
+  describe("First depositor succeed", function () {
     before(async function () {
       this.Presale.deposit({
         from: depositors[0],
@@ -151,7 +151,7 @@ describe("LidSimplifiedPresale", function () {
       });
     });
   });
-  describe("Second depository succeed", function () {
+  describe("Second depositor succeed", function () {
     before(async function () {
       this.Presale.deposit({
         from: depositors[1],
