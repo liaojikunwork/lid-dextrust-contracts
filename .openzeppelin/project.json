@@ -11,9 +11,19 @@
   "name": "lid-simplified-presale-contracts",
   "version": "1.0.0",
   "compiler": {
-    "manager": "truffle",
+    "manager": "openzeppelin",
     "compilerSettings": {
-      "optimizer": {}
+      "optimizer": {
+        "enabled": false,
+        "runs": "200"
+      }
+    },
+    "solcVersion": "0.5.16",
+    "artifactsDir": "build/contracts",
+    "contractsDir": "contracts",
+    "typechain": {
+      "enabled": false
     }
-  }
+  },
+  "telemetryOptIn": true
 }
