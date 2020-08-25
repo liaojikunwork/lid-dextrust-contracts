@@ -1,29 +1,19 @@
-const { ether, BN } = require("@openzeppelin/test-helpers")
+const { ether, BN } = require("@openzeppelin/test-helpers");
 
-let config = {}
+let config = {};
 
 config.timer = {
   startTime: 1598327940,
   hardCapTimer: 172800,
   softCap: ether("2000"),
-}
+};
 
 config.redeemer = {
   redeemBP: 200,
   redeemInterval: 3600,
-  bonusRangeStart: [
-    ether("0"),
-    ether("1000"),
-    ether("2000"),
-    ether("3000")
-  ],
-  bonusRangeBP: [
-    3500,
-    2500,
-    1000,
-    0
-  ]
-}
+  bonusRangeStart: [ether("0"), ether("1000"), ether("2000"), ether("3000")],
+  bonusRangeBP: [3500, 2500, 1000, 0],
+};
 
 config.presale = {
   maxBuyPerAddress: ether("20"),
@@ -40,8 +30,8 @@ config.presale = {
   tokenDistributionBP: {
     dao: 2000,
     team: 900,
-    marketing: 400
-  }
-}
+    marketing: 400,
+  },
+};
 
-module.exports = config
+module.exports = config;
