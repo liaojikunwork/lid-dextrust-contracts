@@ -116,6 +116,12 @@ describe("LidSimplifiedPresale", function () {
   });
 
   describe("State: Before Presale Start", function () {
+    before(async function () {
+      await this.Timer.setStartTime(
+        (Math.floor(Date.now() / 1000) - 60).toString(),
+        { from: owner }
+      );
+    });
     describe("#sendToUniswap", function () {
       it("should revert", async function () {
         await expectRevert(
@@ -135,27 +141,59 @@ describe("LidSimplifiedPresale", function () {
   });
 
   describe("State: Presale Active", function () {
-    it("should fail if less than 0.01 eth", async function () {
-      await expectRevert(
-        this.Presale.deposit({ from: depositors[0], value: "0" }),
-        "Must purchase at least 0.01 ether."
-      );
-    });
-  });
+    describe("deposit", function () {
+      it("should fail if less than 0.01 eth", async function () {
+        await expectRevert(
+          this.Presale.deposit({ from: depositors[0], value: "0" }),
+          "Must purchase at least 0.01 ether."
+        );
+      });
+      it("should not allow more than nonWhitelisted max buy if not on whitelist.", async function () {
+        await expectRevert(
+          this.Presale.deposit({
+            from: notWhitelisted,
+            value: config.LidPresale.maxBuyWithoutWhitelisting.add(new BN(1)),
+          }),
+          "Deposit exceeds max buy per address for non-whitelisted addresses."
+        );
+      });
+      it("should revert if buy higher than max", async function () {
+        const totalDeposit = await web3.eth.getBalance(this.Presale.address);
+        const max = new BN(
+          await this.Presale.getMaxWhitelistedDeposit(totalDeposit)
+        );
 
-  describe("First depositor succeed", function () {
-    before(async function () {
-      this.Presale.deposit({
-        from: depositors[0],
-        value: config.Presale.maxBuyPerAddress,
+        await expectRevert(
+          this.Presale.deposit({
+            from: depositors[0],
+            value: max.add(new BN(1)),
+          }),
+          "Deposit exceeds max buy per address for whitelisted addresses."
+        );
+        await expectRevert(
+          this.Presale.deposit({
+            from: depositors[0],
+            value: max.add(ether("10000000000000")),
+          }),
+          "Deposit exceeds max buy per address for whitelisted addresses."
+        );
       });
     });
-  });
-  describe("Second depositor succeed", function () {
-    before(async function () {
-      this.Presale.deposit({
-        from: depositors[1],
-        value: config.Presale.maxBuyPerAddress,
+
+    describe("First depositor succeed", function () {
+      before(async function () {
+        this.Presale.deposit({
+          from: depositors[0],
+          value: config.Presale.maxBuyPerAddress,
+        });
+      });
+    });
+    describe("Second depositor succeed", function () {
+      before(async function () {
+        this.Presale.deposit({
+          from: depositors[1],
+          value: config.Presale.maxBuyPerAddress,
+        });
       });
     });
   });
