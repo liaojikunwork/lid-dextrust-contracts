@@ -11,7 +11,7 @@
   "name": "lid-simplified-presale-contracts",
   "version": "1.0.0",
   "compiler": {
-    "manager": "openzeppelin",
+    "manager": "truffle",
     "compilerSettings": {
       "optimizer": {
         "enabled": false,
